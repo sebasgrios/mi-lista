@@ -1,7 +1,7 @@
-import List from "./@list/page";
+import ListPage from "./@list/page";
 
 export default function Home() {
   return (
-    <List />
+    <ListPage />
   );
 }

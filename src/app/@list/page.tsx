@@ -1,26 +1,18 @@
+"use client";
+
 import AddTaskButton from "@/components/add-task";
 import Task from "@/components/task";
+import { useAppSelector } from "@/lib/hooks";
 import { Divider } from "@mui/material";
 
-const ListItems = [
-  {
-    id: 0,
-    description: "Conseguir madera",
-    done: true
-  },
-  {
-    id: 1,
-    description: "Conseguir piedra",
-    done: false
-  },
-];
+const ListPage = () => {
+  const list = useAppSelector(state => state.list.tasks);
 
-const List = () => {
   return (
     <div className="grid grid-cols-12 grid-rows-1 mt-8">
       <div className="col-start-4 col-span-6 flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          {ListItems.map(({ id, description, done }, index) =>
+          {list.map(({ id, description, done }, index) =>
             <Task
               key={index}
               id={id}
@@ -29,7 +21,7 @@ const List = () => {
             />
           )}
         </div>
-        {ListItems.length > 0 && (
+        {list.length > 0 && (
           <Divider variant="middle" />
         )}
         <AddTaskButton />
@@ -38,4 +30,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default ListPage;

@@ -2,14 +2,18 @@
 
 import { Button } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
+import { useAppDispatch } from "@/lib/hooks";
+import { addTask } from "@/lib/features/listSlice";
 
 const AddTaskButton = () => {
+  const dispatch = useAppDispatch();
+
   return (
     <Button
       color="inherit"
       fullWidth
       onClick={() => {
-        console.log(`Añadir nuevo campo a la lista`);
+        dispatch(addTask());
       }}
     >
       <AddIcon />

@@ -2,6 +2,9 @@
 
 import { Checkbox, IconButton } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useAppDispatch } from "@/lib/hooks";
+import { changeTaskStatus, deleteTask, updateTaskDescription } from "@/lib/features/listSlice";
+import { useEffect, useState } from "react";
 
 interface ITask {
   id: number;
@@ -10,13 +13,24 @@ interface ITask {
 }
 
 const Task = ({ id, description, done }: ITask) => {
+  const dispatch = useAppDispatch();
+
+  const [input, setInput] = useState(description);
+
+  useEffect(() => {
+    // TOD@ Meter timeout
+    console.log('useEffect');
+
+    dispatch(updateTaskDescription({ id, input }));
+  }, [dispatch, id, input]);
+
   return (
     <div className="flex justify-between items-center hover:bg-gray-50 rounded-lg">
       <div className="flex-1 flex justify-start items-center gap-2">
         <Checkbox
           checked={done}
           onClick={() => {
-            console.log(`Cambiar estado de la tarea ${id}`);
+            dispatch(changeTaskStatus(id));
           }}
         />
         {done
@@ -24,9 +38,9 @@ const Task = ({ id, description, done }: ITask) => {
           : <input
             className="w-full bg-transparent focus:outline-0"
             autoFocus={description.length === 0}
-            value={description}
+            value={input}
             onChange={event => {
-              console.log(`Cambiar descripción de la tarea ${id} a: ${event.target.value}`);
+              setInput(event.target.value);
             }}
           />
         }
@@ -35,7 +49,7 @@ const Task = ({ id, description, done }: ITask) => {
         <IconButton
           aria-label="Eliminar"
           onClick={() => {
-            console.log(`Eliminar la tarea ${id}`);
+            dispatch(deleteTask(id));
           }}
         >
           <DeleteIcon />
