@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
 import { useAppDispatch } from "@/lib/hooks";
 import { addTask } from "@/lib/features/listSlice";
+import { Button } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
 
 const AddTaskButton = () => {
   const dispatch = useAppDispatch();
@@ -11,13 +11,22 @@ const AddTaskButton = () => {
   return (
     <Button
       color="inherit"
+      disableRipple
       fullWidth
       onClick={() => {
         dispatch(addTask());
       }}
+      sx={{
+        color: "gray",
+        "&:hover": {
+          color: "black",
+          backgroundColor: "transparent",
+          fontWeight: "bold"
+        }
+      }}
     >
       <AddIcon />
-      <span className="font-medium">Añadir</span>
+      <span className="text-lg">Añadir</span>
     </Button>
   );
 };
