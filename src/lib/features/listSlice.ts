@@ -1,9 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Ilist } from "@/types/List";
-import { ITask } from "@/interfaces/Task";
+import { Ilist } from "@/types/list";
+import { ITask } from "@/interfaces/task";
 
 const initialState: Ilist = localStorage.getItem('tasks')
-  ? { tasks: JSON.parse(localStorage.getItem('tasks') as string) }
+  ? {
+    tasks: JSON.parse(
+      localStorage.getItem('tasks') as string).filter(
+        ({ description }: ITask) => description != ""
+      )
+  }
   : {
     tasks: []
   };
@@ -13,63 +18,50 @@ const listSlice = createSlice({
   initialState: initialState,
   reducers: {
     addTask: (state) => {
-      const newState = {
-        tasks: [
-          ...state.tasks,
-          {
-            id: state.tasks.length,
-            description: '',
-            done: false
-          }
-        ]
+      const newTasks = [
+        ...state.tasks,
+        {
+          id: btoa(String(Math.random() * 1000)),
+          description: "",
+          done: false
+        }
+      ];
+
+      localStorage.setItem('tasks', JSON.stringify(newTasks));
+
+      return {
+        ...state,
+        tasks: newTasks
       };
+    },
+    modifyTask: (state, actions) => {
+      const newTasks = [
+        ...state.tasks.map((task: ITask) => {
+          if (task.id === actions.payload.id) {
+            return actions.payload;
+          }
+          return task;
+        })
+      ];
 
-      localStorage.setItem('tasks', JSON.stringify(newState.tasks));
+      localStorage.setItem('tasks', JSON.stringify(newTasks));
 
-      return newState;
+      return {
+        ...state,
+        tasks: newTasks
+      };
     },
     deleteTask: (state, actions) => {
-      const newState = {
-        tasks: [
-          ...state.tasks.filter(({ id }: ITask) => id != actions.payload)
-        ]
+      const newTasks = [
+        ...state.tasks.filter(({ id }: ITask) => id != actions.payload)
+      ];
+
+      localStorage.setItem('tasks', JSON.stringify(newTasks));
+
+      return {
+        ...state,
+        tasks: newTasks
       };
-
-      localStorage.setItem('tasks', JSON.stringify(newState.tasks));
-
-      return newState;
-    },
-    changeTaskStatus: (state, actions) => {
-      const newState = {
-        tasks: [
-          ...state.tasks.map((task: ITask) => {
-            if (task.id === actions.payload) {
-              task.done = !task.done;
-            }
-            return task;
-          })
-        ]
-      };
-
-      localStorage.setItem('tasks', JSON.stringify(newState.tasks));
-
-      state = newState;
-    },
-    updateTaskDescription: (state, actions) => {
-      const newState = {
-        tasks: [
-          ...state.tasks.map((task: ITask) => {
-            if (task.id === actions.payload.id) {
-              task.description = actions.payload.input;
-            }
-            return task;
-          })
-        ]
-      };
-
-      localStorage.setItem('tasks', JSON.stringify(newState.tasks));
-
-      state = newState;
     }
   }
 });
@@ -77,8 +69,7 @@ const listSlice = createSlice({
 export const {
   addTask,
   deleteTask,
-  changeTaskStatus,
-  updateTaskDescription
+  modifyTask
 } = listSlice.actions;
 
 export default listSlice;

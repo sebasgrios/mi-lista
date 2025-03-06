@@ -1,32 +1,52 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "@/lib/hooks";
-import { changeTaskStatus, deleteTask, updateTaskDescription } from "@/lib/features/listSlice";
-import { ITask } from "@/interfaces/Task";
-import { Checkbox, IconButton, TextField } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
+import { modifyTask } from "@/lib/features/listSlice";
+import { ITask } from "@/interfaces/task";
+import { Checkbox, TextField } from "@mui/material";
+import DeleteTaskButton from "./delete-task";
 
 const Task = ({ id, description, done }: ITask) => {
+  const pageHasBeenRender = useRef(false);
   const dispatch = useAppDispatch();
 
+  const [checkbox, setCheckbox] = useState(done);
   const [input, setInput] = useState(description);
 
-  useEffect(() => {
-    // TOD@ Meter timeout
-    console.log('useEffect');
 
-    dispatch(updateTaskDescription({ id, input }));
-  }, [dispatch, id, input]);
+  let timeout: NodeJS.Timeout;
+  const interval = 500;
+
+  const saveHandler = () => {
+    const payload = {
+      id,
+      description: input,
+      done: checkbox
+    };
+
+    dispatch(modifyTask(payload));
+  };
+
+  useEffect(() => {
+    if (pageHasBeenRender.current) {
+      timeout = setTimeout(saveHandler, interval);
+    }
+
+    pageHasBeenRender.current = true;
+
+    return () => clearTimeout(timeout);
+  }, [checkbox, input]);
 
   return (
     <div className="flex justify-between items-center hover:bg-gray-50 rounded-lg">
       <div className="flex-1 flex justify-start items-center gap-2">
         <Checkbox
-          checked={done}
+          checked={checkbox}
           disableRipple
           onClick={() => {
-            dispatch(changeTaskStatus(id));
+            clearTimeout(timeout);
+            setCheckbox(!checkbox);
           }}
           sx={{
             color: "gray",
@@ -40,15 +60,24 @@ const Task = ({ id, description, done }: ITask) => {
             }
           }}
         />
-        {done
-          ? <p className="line-through">{description}</p>
+        {checkbox
+          ? <p className="line-through">{input}</p>
           : <TextField
-            className="w-full"
+            fullWidth
             variant="standard"
             autoFocus={description.length === 0}
             value={input}
             onChange={event => {
+              clearTimeout(timeout);
               setInput(event.target.value);
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                (event.target as HTMLInputElement).blur();
+
+                clearTimeout(timeout);
+                saveHandler();
+              }
             }}
             sx={{
               ".MuiInput-underline:before": {
@@ -64,25 +93,7 @@ const Task = ({ id, description, done }: ITask) => {
           />
         }
       </div>
-      <div className="flex justify-end items-center gap-2">
-        <IconButton
-          aria-label="Eliminar"
-          disableRipple
-          onClick={() => {
-            dispatch(deleteTask(id));
-          }}
-          sx={{
-            color: "gray",
-            borderRadius: "0.5rem",
-            "&:hover": {
-              color: "black",
-              backgroundColor: "transparent"
-            }
-          }}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </div>
+      <DeleteTaskButton id={id} />
     </div>
   );
 };

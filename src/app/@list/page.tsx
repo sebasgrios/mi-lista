@@ -1,11 +1,11 @@
 "use client";
 
-import { useAppSelector } from "@/lib/hooks";
-import AddTaskButton from "@/components/add-task";
-import Task from "@/components/task";
-import { Divider } from "@mui/material";
 import { useEffect } from "react";
-import { ITask } from "@/interfaces/Task";
+import { useAppSelector } from "@/lib/hooks";
+import { ITask } from "@/interfaces/task";
+import Task from "@/components/task";
+import AddTaskButton from "@/components/add-task";
+import { Divider } from "@mui/material";
 
 const ListPage = () => {
   const list = useAppSelector(state => state.list.tasks);
@@ -20,9 +20,9 @@ const ListPage = () => {
     <div className="grid grid-cols-12 grid-rows-1 mt-8">
       <div className="col-start-4 col-span-6 flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          {list.map(({ id, description, done }: ITask, index: number) =>
+          {list.map(({ id, description, done }: ITask) =>
             <Task
-              key={index}
+              key={id}
               id={id}
               description={description}
               done={done}
