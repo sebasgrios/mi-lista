@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "@/lib/hooks";
-import { modifyTask } from "@/lib/features/listSlice";
+import { modifyTask } from "@/lib/features/list-slice";
 import { ITask } from "@/interfaces/task";
 import { Checkbox, TextField } from "@mui/material";
 import DeleteTaskButton from "./delete-task";

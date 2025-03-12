@@ -2,21 +2,24 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Ilist } from "@/types/list";
 import { ITask } from "@/interfaces/task";
 
-const initialState: Ilist = localStorage.getItem('tasks')
-  ? {
-    tasks: JSON.parse(
-      localStorage.getItem('tasks') as string).filter(
-        ({ description }: ITask) => description != ""
-      )
-  }
-  : {
-    tasks: []
-  };
+const initialState: Ilist = {
+  tasks: []
+};
 
 const listSlice = createSlice({
   name: "list",
   initialState: initialState,
   reducers: {
+    setList: (state, actions) => {
+      const tasks = JSON.parse(actions.payload);
+
+      return {
+        ...state,
+        tasks: [...tasks.filter(
+          ({ description }: ITask) => description != ""
+        )]
+      };
+    },
     addTask: (state) => {
       const newTasks = [
         ...state.tasks,
@@ -67,6 +70,7 @@ const listSlice = createSlice({
 });
 
 export const {
+  setList,
   addTask,
   deleteTask,
   modifyTask

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/lib/hooks";
-import { deleteTask } from "@/lib/features/listSlice";
+import { deleteTask } from "@/lib/features/list-slice";
 import { IconButton } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 

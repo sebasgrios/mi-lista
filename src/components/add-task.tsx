@@ -1,7 +1,7 @@
 "use client";
 
 import { useAppDispatch } from "@/lib/hooks";
-import { addTask } from "@/lib/features/listSlice";
+import { addTask } from "@/lib/features/list-slice";
 import { Button } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 

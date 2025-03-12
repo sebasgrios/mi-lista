@@ -1,20 +1,25 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAppSelector } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { ITask } from "@/interfaces/task";
 import Task from "@/components/task";
 import AddTaskButton from "@/components/add-task";
 import { Divider } from "@mui/material";
+import { setList } from "@/lib/features/list-slice";
 
 const ListPage = () => {
+  const dispatch = useAppDispatch();
   const list = useAppSelector(state => state.list.tasks);
 
   useEffect(() => {
-    if (!localStorage.getItem('tasks')) {
+    const tasks = localStorage.getItem('tasks');
+    if (!tasks) {
       localStorage.setItem('tasks', JSON.stringify([]));
+    } else {
+      dispatch(setList(tasks));
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="grid grid-cols-12 grid-rows-1 mt-8">
