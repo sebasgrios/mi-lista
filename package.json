@@ -1,7 +1,7 @@
 {
-  "name": "simple-list",
+  "name": "minimalist",
   "description": "Página web para gestionar tu propia lista de manera sencilla.",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": {
     "name": "Sebastián González Ríos",
     "email": "contact@sebasgrios.es",
