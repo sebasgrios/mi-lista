@@ -2,11 +2,11 @@
 
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setList } from "@/lib/features/list-slice";
 import { ITask } from "@/interfaces/task";
 import Task from "@/components/task";
-import AddTaskButton from "@/components/add-task";
 import { Divider } from "@mui/material";
-import { setList } from "@/lib/features/list-slice";
+import AddTaskButton from "@/components/add-task";
 
 const ListPage = () => {
   const dispatch = useAppDispatch();

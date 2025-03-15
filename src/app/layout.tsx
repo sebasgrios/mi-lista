@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
-import "./globals.css";
 import StoreProvider from "./StoreProvider";
+import "./globals.css";
 
 const nunitoFont = Nunito({
   variable: "--font-nunito",
@@ -9,7 +9,7 @@ const nunitoFont = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Simple list",
+  title: "MinimaList",
   description: "Gestiona tu propia lista de manera sencilla.",
 };
 
