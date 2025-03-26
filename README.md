@@ -1,4 +1,4 @@
-<h1>🗒️ Minimalist</h1>
+<h1>🗒️ Mi lista</h1>
 <p>Crea tu propia lista de la manera más sencilla posible. </br>
 Sin registros, sin anuncios y sin pérdidas de tiempo.</p>
 <div align="center">

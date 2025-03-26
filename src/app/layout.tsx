@@ -9,7 +9,7 @@ const nunitoFont = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Minimalist",
+  title: "Lista",
   description: "Gestiona tu propia lista de manera sencilla.",
 };
 
