@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${nunitoFont.variable} antialiased`}>
+      <body className={`${nunitoFont.className} antialiased`}>
         <StoreProvider>
           {children}
         </StoreProvider>

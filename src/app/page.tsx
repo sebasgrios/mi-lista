@@ -12,6 +12,11 @@ export default function Home() {
   const theme = useMemo(() => createTheme({
     palette: {
       mode: darkMode ? "dark" : "light"
+    },
+    typography: {
+      fontFamily: [
+        "Nunito"
+      ].join(',')
     }
   }),
     [darkMode]);

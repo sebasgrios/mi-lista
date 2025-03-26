@@ -21,6 +21,9 @@ const getStyle = (isDarkMode: boolean) => isDarkMode ? {
   ".MuiInput-root.Mui-disabled:before": {
     borderBottomStyle: "none"
   },
+  ".MuiInput-input": {
+    textOverflow: "ellipsis"
+  }
 } : {
   ".MuiInput-root::before": {
     border: "none"
@@ -39,6 +42,9 @@ const getStyle = (isDarkMode: boolean) => isDarkMode ? {
   ".MuiInput-root.Mui-disabled:before": {
     borderBottomStyle: "none"
   },
+  ".MuiInput-input": {
+    textOverflow: "ellipsis"
+  }
 };
 
 const TextField = ({
