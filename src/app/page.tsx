@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { createTheme } from "@mui/material";
+import StoreProvider from "./StoreProvider";
 import { ThemeProvider } from "@emotion/react";
 import ListPage from "./@list/page";
 
@@ -22,8 +23,10 @@ export default function Home() {
     [darkMode]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <ListPage />
-    </ThemeProvider>
+    <StoreProvider>
+      <ThemeProvider theme={theme}>
+        <ListPage />
+      </ThemeProvider>
+    </StoreProvider>
   );
 }

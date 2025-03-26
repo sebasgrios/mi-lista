@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
-import StoreProvider from "./StoreProvider";
 import "./globals.css";
 
 const nunitoFont = Nunito({
@@ -17,13 +16,12 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
+  list: React.ReactNode;
 }>) {
   return (
     <html lang="es">
       <body className={`${nunitoFont.className} antialiased`}>
-        <StoreProvider>
-          {children}
-        </StoreProvider>
+        {children}
       </body>
     </html>
   );
