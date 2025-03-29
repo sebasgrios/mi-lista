@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
+import typeSlice from "./features/type-slice";
 import listSlice from "./features/list-slice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
+      types: typeSlice.reducer,
       list: listSlice.reducer
     }
   });
