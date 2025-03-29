@@ -6,12 +6,11 @@ import { createContext, useContext, useState, ReactNode } from "react";
 const ModalContext = createContext<IModalContext | undefined>(undefined);
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
-  const [openModal, setOpenModal] = useState(false);
-  const [textModal, setTextModal] = useState("");
-  const [confirmAction, setConfirmAction] = useState<() => void>(() => () => { });
+  const [loaderModal, setLoaderModal] = useState(false);
+  const [customModal, setCustomModal] = useState({ visibility: false, text: "", confirmAction: () => { } });
 
   return (
-    <ModalContext.Provider value={{ openModal, setOpenModal, textModal, setTextModal, confirmAction, setConfirmAction }}>
+    <ModalContext.Provider value={{ loaderModal, setLoaderModal, customModal, setCustomModal }}>
       {children}
     </ModalContext.Provider>
   );

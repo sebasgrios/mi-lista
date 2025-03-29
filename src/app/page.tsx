@@ -6,7 +6,8 @@ import { createTheme } from "@mui/material";
 import StoreProvider from "./StoreProvider";
 import { ThemeProvider } from "@emotion/react";
 import { ModalProvider } from "@/context/ModalContext";
-import Modal from "@/components/modal";
+import LoaderModal from "@/components/loader-modal";
+import CustomModal from "@/components/custom-modal";
 import HomePage from "./@home/page";
 import ListPage from "./@list/page";
 
@@ -30,7 +31,8 @@ export default function Home() {
     <StoreProvider>
       <ThemeProvider theme={theme}>
         <ModalProvider>
-          <Modal />
+          <LoaderModal />
+          <CustomModal />
           {isLogging ? <ListPage /> : <HomePage />}
         </ModalProvider>
       </ThemeProvider>

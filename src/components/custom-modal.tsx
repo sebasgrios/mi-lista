@@ -2,16 +2,21 @@
 
 import { useModalContext } from "@/context/ModalContext";
 
-const Modal = () => {
-  const { openModal, setOpenModal, textModal, confirmAction } = useModalContext();
+const CustomModal = () => {
+  const { customModal, setCustomModal } = useModalContext();
+  const { visibility, text, confirmAction } = customModal;
 
   return (
-    openModal && (
+    visibility && (
       <div
         className="fixed flex items-center justify-center inset-0 z-50 bg-black/50 dark:bg-white/25 px-4"
         onClick={(event) => {
           if (event.target === event.currentTarget) {
-            setOpenModal(false);
+            setCustomModal({
+              visibility: false,
+              text: "",
+              confirmAction: () => { },
+            });
           }
         }}
       >
@@ -19,14 +24,18 @@ const Modal = () => {
           <div className="flex items-center justify-end w-full">
             <button
               className="text-4xl px-2 rounded-lg select-none"
-              onClick={() => setOpenModal(false)}
+              onClick={() => setCustomModal({
+                visibility: false,
+                text: "",
+                confirmAction: () => { },
+              })}
             >
               &times;
             </button>
           </div>
           <div className="flex flex-col items-center justify-start gap-4 px-6 pb-6">
             <p className="pr-6 text-md">
-              {textModal}
+              {text}
             </p>
             <button
               className="flex items-center justify-center text-md rounded-lg border px-6 py-2 hover:bg-black/10 dark:hover:bg-white/10"
@@ -41,4 +50,4 @@ const Modal = () => {
   );
 };
 
-export default Modal;
+export default CustomModal;

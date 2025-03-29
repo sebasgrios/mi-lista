@@ -2,9 +2,10 @@
 
 import { useModalContext } from "@/context/ModalContext";
 import GoogleButton from "@/components/google-button";
+import { redirect } from "next/navigation";
 
 const HomePage = () => {
-  const { setOpenModal, setTextModal, setConfirmAction } = useModalContext();
+  const { setLoaderModal, setCustomModal } = useModalContext();
 
   return (
     <div className="h-svh flex flex-col items-center justify-evenly">
@@ -15,16 +16,23 @@ const HomePage = () => {
       <div className="flex flex-col items-center gap-4">
         <GoogleButton
           onClick={() => {
-            console.log("Redirecting to Google...");
+            setLoaderModal(true);
+            redirect(`${process.env.API_URL}/auth/google`);
           }}
         />
         <button
           onClick={() => {
-            setTextModal("Si continuas como invitado, tus tareas permanecerán un máximo de 7 días y solo tendrás acceso a una lista.");
-            setOpenModal(true);
-            setConfirmAction(() => () => {
-              console.log("Redirecting to task...");
-              setOpenModal(false);
+            setCustomModal({
+              visibility: true,
+              text: "Si continuas como invitado, tus tareas permanecerán un máximo de 7 días y solo tendrás acceso a una lista.",
+              confirmAction: () => {
+                console.log("Redirecting to task...");
+                setCustomModal({
+                  visibility: false,
+                  text: "",
+                  confirmAction: () => { },
+                });
+              },
             });
           }}
         >
